@@ -2,7 +2,7 @@
 Web Monitor Tool monitors websites
 
 To Install Packages : 
-run npm install 
+run > npm install 
 
-To run the application
-node app
+To run the application : 
+run > node app
