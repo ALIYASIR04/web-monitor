@@ -2,6 +2,8 @@
 <h1>
   Daily Site Events
 </h1>
+
+
 <div id="events">
   <%- partial('_events', { url: '/api/pings/events', route: route }) %>
 </div>
@@ -10,12 +12,11 @@
 <p><a href="<%= route %>/checks/new">Admin should create first check</a>.</p>
 </div>
 
-<div>
-  Enter your website URL :
-  <input type="text" id="txtURLCheck" />
-</div>
+
 <script>
 $(document).ready(function() {
+  //$('#myEvents').hide();
+  var myURL = $("#txtURLCheck").val();
   $('.navbar-inner li').eq(0).addClass('active');
   $.getJSON('/api/checks/count', function(nbChecks) {
     if (nbChecks.total == 0) {

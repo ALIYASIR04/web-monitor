@@ -1,3 +1,9 @@
+<div>
+  Enter your website URL :
+  <input type="text" id="txtURLCheck"  class="span8" />
+  <button type="submit" class="btn btn-primary"  id="btnCheckSite">SUBMIT</button>
+</div>
+<div id="myEvents"></div>
 <div id="checkEvents"></div>
 <script id="event_template" type="text/template">
 <li class="{{= highlightFrom && date.valueOf() > highlightFrom ? 'new' : ''}}">
@@ -28,6 +34,7 @@
 </script>
 <script>
 $(document).ready(function() {
+  $("#myEvents").hide();
   var highlightFrom = window.location.search.substring(0,15) == "?highlightFrom=" ? parseInt(window.location.search.substring(15)) : Date.now();
   var event_template = document.getElementById('event_template').innerHTML;
   var ejs = require('ejs');
@@ -39,10 +46,42 @@ $(document).ready(function() {
       $(hash).get(0).scrollIntoView();
     }
   };
+
+  $("#btnCheckSite").click(function(){
+    
+    var queryString = typeof dateInterval == 'undefined' ? '' : dateInterval.getIntervalQueryString();
+    $.getJSON('<%= url %>' + queryString, function(events) {
+      if ($.isEmptyObject(events)) {
+        emptyEvents();
+        return;
+      }
+      var lines = [];
+      
+      $.each(events, function(key, eventGroup) {
+       
+        lines.push('<ul><li class="day"><h3>' + moment(key).format('dddd, MMMM Do') + '</h3><ul>');
+        $.each(eventGroup, function(key, event) {
+          if (!event.message) return;
+          if(event.check.url==$("#txtURLCheck").val()){
+            lines.push(ejs.render(event_template, { event: event, date: moment(event.timestamp), highlightFrom: highlightFrom, route: '<%= route %>' }));
+          };
+          
+        });
+        lines.push('</ul></li></ul>');
+      });
+      
+      $('#myEvents').html(lines.join(''));
+      adjustHash();
+    });
+
+    $("#myEvents").show();
+    $("#checkEvents").hide();
+  });
   var emptyEvents = function() {
     $('#checkEvents').html('<p>Nothing happened lately. All Green!</p>');
     adjustHash();
   }
+
   var updateEvents = function() {
     var queryString = typeof dateInterval == 'undefined' ? '' : dateInterval.getIntervalQueryString();
     $.getJSON('<%= url %>' + queryString, function(events) {
@@ -53,9 +92,11 @@ $(document).ready(function() {
       var lines = [];
       var nbEvents = 0;
       $.each(events, function(key, eventGroup) {
+       
         lines.push('<ul><li class="day"><h3>' + moment(key).format('dddd, MMMM Do') + '</h3><ul>');
         $.each(eventGroup, function(key, event) {
           if (!event.message) return;
+          
           lines.push(ejs.render(event_template, { event: event, date: moment(event.timestamp), highlightFrom: highlightFrom, route: '<%= route %>' }));
           nbEvents++;
         });
@@ -69,6 +110,8 @@ $(document).ready(function() {
     });
   }
   socket.on('CheckEvent', updateEvents);
+
+
   if(typeof dateInterval != 'undefined') {
     dateInterval.on('refresh-stats', function() {
       if (!this.stat) return emptyEvents();
