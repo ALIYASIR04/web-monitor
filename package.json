@@ -19,7 +19,8 @@
   },
   "devDependencies": {
     "mocha": "1.7.x",
-    "should": "1.1.0"
+    "should": "1.1.0",
+    "ws": ">=1.1.5"
   },
   "keywords": [
     "monitoring",
