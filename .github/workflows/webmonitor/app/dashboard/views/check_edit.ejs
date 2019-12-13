@@ -1,0 +1,24 @@
+<script src="<%= route %>/javascripts/checkState.js"></script>
+<div>
+  <span id="check_24h"></span>
+</div>
+<h1>Edit check "<%= check.name %>"</h1>
+<% if (info.length) { %>
+<div class="alert alert-success"><%= info %></div>
+<% } %>
+<%- partial('_check_details', { check: check, pollerCollection: pollerCollection, pollerDetails: pollerDetails, route: route }) %>
+<div>
+</div>
+<script>
+jQuery(document).ready(function($) {
+  // highlight current section in main nav
+  $('.navbar-inner li').eq(1).addClass('active');
+
+  // update check state live
+  updateCheckState(<%- JSON.stringify(check) %>);
+  socket.on('CheckEvent', function() {
+    $.getJSON('/api/checks/<%= check._id %>', updateCheckState);
+  });
+
+});
+</script>

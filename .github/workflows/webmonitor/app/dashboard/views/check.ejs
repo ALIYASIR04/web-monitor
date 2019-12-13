@@ -1,0 +1,72 @@
+<script src="<%= route %>/javascripts/ejs.min.js"></script>
+<script src="<%= route %>/javascripts/bootstrap-affix.js"></script>
+<script src="<%= route %>/javascripts/checkState.js"></script>
+<script>
+var ejs = require('ejs');
+ejs.open = '{{';
+ejs.close = '}}';
+</script>
+
+<h1>
+  Check "<%= check.name %>"
+  <a href="<%= check.url %>" target="_blank"></a>
+</h1>
+<div>
+  <span id="check_24h"></span>
+  <a href="<%= route %>/checks/<%= check._id %>/edit" class="btn btn-primary">Edit</a>
+</div>
+
+<% if (info.length) { %>
+<div class="alert alert-success"><%= info %></div>
+<% } %>
+
+
+<script>
+var dateInterval = new DateInterval(
+  '<%= req.query.type || 'month' %>',
+  <%= req.query.date || Date.now() %>,
+  <%= check.firstTested ? check.firstTested.valueOf() : Date.now() %>,
+  '/api/checks/<%= check._id %>/',
+  'hour'
+);
+jQuery(document).ready(function($) {
+  // highlight current section in main nav
+  $('.navbar-inner li').eq(1).addClass('active');
+  
+  // update check state live
+  updateCheckState(<%- JSON.stringify(check) %>);
+  socket.on('CheckEvent', function() {
+    $.getJSON('/api/checks/<%= check._id %>', updateCheckState);
+  });
+  
+  // hide alert after 5s
+  window.setTimeout(function() {
+    $('h1 + div.alert').slideUp(400, function() {
+      var offset = $('#dateNavigation').position();
+      $('#dateNavigation').data('affix', false).affix({
+        offset: offset
+      });
+      $('#secondaryNav').data('affix', false).affix({
+        offset: offset
+      });
+    });
+  }, 5000);
+  
+  // update stats for each ping if looking at the current hour
+  socket.emit('set check', '<%= check._id %>');
+  socket.on('ping', function(ping) {
+    var now = Date.now();
+    if (dateInterval.type == 'hour' && now > dateInterval.begin.valueOf() && now < dateInterval.end.valueOf()) {
+      dateInterval.refreshData();
+    }
+  });
+  
+  // update stats every 15 minutes if looking at the current moment
+  window.setInterval(function() {
+    var now = Date.now();
+    if (dateInterval.type != 'hour' && now > dateInterval.begin.valueOf() && now < dateInterval.end.valueOf()) {
+      dateInterval.refreshData();
+    }
+  }, 15 * 60 * 1000);
+});
+</script>
