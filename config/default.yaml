@@ -5,7 +5,7 @@ mongodb:
   database: monitorDB
   user:     root 
   password:
-  connectionString: mongodb+srv://aliyasir04:aliyasir04@monitordb-dqfyd.mongodb.net/test?retryWrites=true&w=majority
+  connectionString: mongodb+srv://aliyasir04:aliyasir04@monitordb-dqfyd.mongodb.net/monitorDB?retryWrites=true&w=majority
 
 monitor:
   name:                   origin
