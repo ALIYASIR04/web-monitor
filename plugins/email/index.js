@@ -1,9 +1,5 @@
 
-var fs         = require('fs');
-var nodemailer = require('nodemailer');
-var moment     = require('moment');
 var CheckEvent = require('../../models/checkEvent');
-var ejs        = require('ejs');
 
 exports.initWebApp = function(options) {
   
@@ -13,14 +9,6 @@ exports.initWebApp = function(options) {
     checkEvent.findCheck(function(err, check) {
       if (err) return console.error(err);
       var nodemailer = require('nodemailer');
-      //console.log("User: " + config.auth.user);
-      /*var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: config.auth.user,
-          pass: config.auth.pass
-        }
-      }); */
 
       var transporter = nodemailer.createTransport(config.transport);
 

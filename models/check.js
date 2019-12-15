@@ -223,13 +223,6 @@ Check.methods.updateUptime = function(callback) {
 };
 
 
-var statProvider = {
-  'hour':  { model: 'Ping', beginMethod: 'resetHour', endMethod: 'completeHour' },
-  'day':   { model: 'CheckHourlyStat', beginMethod: 'resetDay', endMethod: 'completeDay', duration: 60 * 60 * 1000 },
-  'month': { model: 'CheckDailyStat', beginMethod: 'resetMonth', endMethod: 'completeMonth', duration: 24 * 60 * 60 * 1000 },
-  'year':  { model: 'CheckMonthlyStat', beginMethod: 'resetYear', endMethod: 'completeYear' }
-};
-
 Check.methods.getStatsForPeriod = function(period, begin, end, callback) {
   var periodPrefs = statProvider[period];
   var stats = [];

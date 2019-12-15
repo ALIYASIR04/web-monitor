@@ -1,7 +1,7 @@
 <div>
-  Enter your website URL :
-  <input type="text" id="txtURLCheck"  class="span8" />
-  <button type="submit" class="btn btn-primary"  id="btnCheckSite">SUBMIT</button>
+  Enter website URL to monitor:
+  <input type="text" id="txtURLCheck"  class="span8" placeholder="https://www.example.com"/>
+  <button type="submit" class="btn btn-primary"  id="btnCheckSite">Submit</button>
 </div>
 <div id="myEvents"></div>
 <div id="checkEvents"></div>
@@ -48,7 +48,6 @@ $(document).ready(function() {
   };
 
   $("#btnCheckSite").click(function(){
-    
     var queryString = typeof dateInterval == 'undefined' ? '' : dateInterval.getIntervalQueryString();
     $.getJSON('<%= url %>' + queryString, function(events) {
       if ($.isEmptyObject(events)) {
@@ -65,7 +64,6 @@ $(document).ready(function() {
           if(event.check.url==$("#txtURLCheck").val()){
             lines.push(ejs.render(event_template, { event: event, date: moment(event.timestamp), highlightFrom: highlightFrom, route: '<%= route %>' }));
           };
-          
         });
         lines.push('</ul></li></ul>');
       });
