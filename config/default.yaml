@@ -42,6 +42,6 @@ email:
 
 basicAuth:
   username:    admin
-  password:    aliyasir04
+  password:    password
 verbose: false 
 
