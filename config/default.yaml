@@ -5,7 +5,8 @@ mongodb:
   database: monitorDB
   user:     root 
   password:
-  connectionString:  mongodb://127.0.0.1:27017/monitorDB?compressors=zlib&gssapiServiceName=mongodb
+  connectionString:  mongodb+srv://aliyasir04:aliyasir04@monitordb-dqfyd.mongodb.net/test?retryWrites=true&w=majority
+  #mongodb://127.0.0.1:27017/monitorDB?compressors=zlib&gssapiServiceName=mongodb
 
 monitor:
   name:                   origin
