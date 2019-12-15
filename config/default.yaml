@@ -5,8 +5,7 @@ mongodb:
   database: monitorDB
   user:     root 
   password:
-  connectionString:  mongodb+srv://aliyasir04:aliyasir04@monitordb-dqfyd.mongodb.net/test?retryWrites=true&w=majority
-  #mongodb://127.0.0.1:27017/monitorDB?compressors=zlib&gssapiServiceName=mongodb
+  connectionString: mongodb+srv://aliyasir04:aliyasir04@monitordb-dqfyd.mongodb.net/test?retryWrites=true&w=majority
 
 monitor:
   name:                   origin
@@ -39,7 +38,7 @@ email:
     to:     'aliyasir.04@gmail.com'
 
 basicAuth:
-  username:    admin
-  password:    password
+  username:    aliyasir04
+  password:    aliyasir04
 verbose: false 
 

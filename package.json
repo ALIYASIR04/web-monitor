@@ -16,6 +16,7 @@
     "net-ping": "1.2.3",
     "nodemailer": "6.4.2",
     "nodemon": "^2.0.2",
+    "npm": "^6.13.4",
     "socket.io": "^0.9.14"
   },
   "devDependencies": {
@@ -35,7 +36,7 @@
   ],
   "engines": {
     "node": "10.x",
-    "npm": "1.2.x"
+    "npm": "6.13.4"
   },
   "scripts": {
     "start": "node app.js"
