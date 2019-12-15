@@ -26,8 +26,8 @@ email:
   transport:         
     service:   'gmail' 
     auth:            
-      user:   'aliyasir.04@gmail.com'
-      pass:    'Zohaan@0903'
+      user:   'aliyasirtesting04@gmail.com'
+      pass:    'HOOQTest'
   event:
     up:        true
     down:      true
