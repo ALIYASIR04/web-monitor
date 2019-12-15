@@ -7,13 +7,6 @@
     <a href="{{=  route + '/checks/' + stat.check._id +'?type=' + type + '&date=' + date }}">{{= stat.check.name }}</a>
     <a href="{{= stat.check.url }}" target="_blank"><img src="{{= route }}/images/external-link-ltr-icon.png"></a>
 </div>
-{{- uptimeBar('check', {
-        from: begin,
-        to: end,
-        periods: stat.outages || [],
-        check: stat.check
-    })
-}}
 </li>
 </script>
 <script>
@@ -29,7 +22,6 @@ $(document).ready(function() {
       $.each(stats, function(index, stat) {
         bars.push(ejs.render(check_template, { stat: stat, type: dateInterval.type, date: dateInterval.date, begin: dateInterval.begin.valueOf(), end: dateInterval.end.valueOf(), route: '<%= route %>' }))
       });
-      //$('#checkUptimeBars').html(bars.join(''));
     });
   };
   updateChecks();

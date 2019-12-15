@@ -1,15 +1,18 @@
 url: 'https://web-monitor-hooq.herokuapp.com'
+#url: 'http://localhost:3000'
 
 mongodb:
   server:   localhost
   database: monitorDB
   user:     root 
   password:
+  #connectionString:  mongodb://127.0.0.1:27017/test?compressors=zlib&gssapiServiceName=mongodb  
   connectionString: mongodb+srv://aliyasir04:aliyasir04@monitordb-dqfyd.mongodb.net/monitorDB?retryWrites=true&w=majority
 
 monitor:
   name:                   origin
   apiUrl:                 'http://web-monitor-hooq.herokuapp.com/api' 
+  #apiUrl:                 'http://localhost:3000/api'
   pollingInterval:        5000      # five seconds
   timeout:                5000       # five seconds
   userAgent:              
@@ -35,10 +38,10 @@ email:
     restarted: false
   message:           
     from:     'Ali <aliyasir.04@gmail.com>'
-    to:     'aliyasir.04@gmail.com'
+    to:     'aliyasir.04@gmail.com' #change to your emailID
 
 basicAuth:
-  username:    aliyasir04
+  username:    admin
   password:    aliyasir04
 verbose: false 
 

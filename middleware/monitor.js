@@ -116,7 +116,6 @@ Monitor.prototype.declarePoll = function(check, callback) {
   var self = this;
   var req = http.request(options, function(res) {
     if (res.statusCode != 200) {
-      console.log("Error Site.Test Poll");
       return callback(new Error(self.config.apiUrl + '/check/:id/test resource responded with error code: ' + res.statusCode));
     }
     res.on('data', function(chunk) {
